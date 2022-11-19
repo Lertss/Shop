@@ -6,19 +6,17 @@
 {% block content %}
   {% if user.is_authenticated %}
     <div style="position: absolute; right: 50%; transform: translateX(50%); margin-top: 30px;">
-      <button onclick="window.location.href = {% url 'reg' %}" type="submit" class="btn btn-outline-info">Профиль</button>
-      <button onclick="window.location.href = {% url 'exit' %}" type="submit" class="btn btn-outline-info">Выход</button>
+      <button href = {% url 'index' %}>Профиль</button>
+      <button type="button" class="btn" onclick="document.location='{% url 'logout' %}'">Выход</button>
     </div>
   {% else %}
     <div style="position: absolute; right: 50%; transform: translateX(50%); margin-top: 30px;">
-      <button onclick="window.location.href = {% url 'reg' %}" type="submit" class="btn btn-outline-info">Регистрация</button>
-      <button onclick="window.location.href = {% url 'login' %}" type="submit" class="btn btn-outline-info">Вход</button>
+    <button type="button" class="btn" onclick="document.location='{% url 'register' %}'">Регестрация</button>
+    <button type="button" class="btn" onclick="document.location='{% url 'login' %}'">Вход</button>
     </div>
   {% endif %}
 <section class="main-section paddind" id="Portfolio">
   <!--main-section-start-->
-    <!-- <a class="btn btn-outline-secondary" style="position: absolute; float: right; margin: 0;">Регистрация</a> -->
-    <!-- <a class="btn btn-outline-secondary" style="position: absolute; float: right; margin: 0;">Вход</a> -->
     <h2>Магазин</h2>
     <h6>У нас большой асортимент товаров.</h6>
     <div class="portfolioFilter">

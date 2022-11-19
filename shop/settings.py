@@ -1,6 +1,20 @@
 import os
+
+
+import os
+from pathlib import Path
+from django.contrib import messages
+
+import re
+
+with open("Secret.txt", "r", encoding="utf-8") as file:
+    txt = file.read()
+
+    splitted_text = re.split("\n", txt)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = '5ila)9^q7qsv^x_2%mgdrt=caw+&h&c)+(4d-4fi^c@_%ll7+k'
+#SECRET_KEY = '5ila)9^q7qsv^x_2%mgdrt=caw+&h&c)+(4d-4fi^c@_%ll7+k'
+SECRET_KEY = splitted_text[0]
 DEBUG = True
 ALLOWED_HOSTS = []
 
@@ -106,3 +120,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
 MEDIA_URL = '/pictures/'
 
 LOGIN_REDIRECT_URL = 'home'
+
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = splitted_text[1]
+EMAIL_HOST_PASSWORD = splitted_text[2]
+EMAIL_PORT = 587
+
+AUTH_USER_MODEL = 'users.User'
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'

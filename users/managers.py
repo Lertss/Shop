@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
-
-
+from django.db import IntegrityError
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -13,8 +14,14 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
-        return user
+        try:
+            user.save(using=self._db)
+        except IntegrityError:
+            return ValueError('The RTR')
+
+        else:
+
+            return user
 
     def create_user(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', False)

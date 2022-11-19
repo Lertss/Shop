@@ -11,7 +11,6 @@ from .utils import generate_token
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 import threading
@@ -37,7 +36,6 @@ class RegistrationView(View):
             'data': request.POST,
             'has_error': False
         }
-
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -52,14 +50,17 @@ class RegistrationView(View):
             messages.add_message(request, messages.ERROR,
                                  'Please provide a valid email')
             context['has_error'] = True
-
         if context['has_error']:
             return render(request, 'auth/register.html', context, status=400)
 
         user = User.objects.create_user(username=username, email=email)
-        user.set_password(password)
-        user.is_active = False
-        user.save()
+        try:
+            user.set_password(password)
+        except AttributeError:
+             return redirect('login')
+        else:
+            user.is_active = False
+            user.save()
 
         current_site = get_current_site(request)
         email_subject = 'Active your Account'

@@ -1,8 +1,7 @@
 import os
 
-
 import os
-from pathlib import Path
+
 from django.contrib import messages
 
 import re
@@ -13,7 +12,7 @@ with open("Secret.txt", "r", encoding="utf-8") as file:
     splitted_text = re.split("\n", txt)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#SECRET_KEY = '5ila)9^q7qsv^x_2%mgdrt=caw+&h&c)+(4d-4fi^c@_%ll7+k'
+
 SECRET_KEY = splitted_text[0]
 DEBUG = True
 ALLOWED_HOSTS = []
@@ -60,7 +59,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -74,7 +72,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -94,7 +91,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -108,7 +104,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -118,9 +113,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
 MEDIA_URL = '/pictures/'
-
-LOGIN_REDIRECT_URL = 'home'
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

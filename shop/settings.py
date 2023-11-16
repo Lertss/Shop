@@ -1,19 +1,21 @@
 import os
-
-import os
-
 from django.contrib import messages
-
 import re
+import logging
 
-with open("Secret.txt", "r", encoding="utf-8") as file:
-    txt = file.read()
+from dotenv import load_dotenv
 
-    splitted_text = re.split("\n", txt)
+logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.WARNING)
+load_dotenv()
+try:
+    SEC_KEY = os.environ["SEC_KEY"]
+except KeyError as err:
+    logging.critical(f"Can't read key from enviroment variable. Message: {err}")
+    raise KeyError(err)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = splitted_text[0]
+SECRET_KEY = SEC_KEY
 DEBUG = True
 ALLOWED_HOSTS = []
 
@@ -122,9 +124,14 @@ STATICFILES_DIRS = [
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = splitted_text[1]
-EMAIL_HOST_PASSWORD = splitted_text[2]
 EMAIL_PORT = 587
+try:
+    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+except KeyError as err:
+    logging.critical(f"Can't read email host user or password from enviroment variable. Message: {err}")
+    raise KeyError(err)
+
 
 AUTH_USER_MODEL = 'users.User'
 
